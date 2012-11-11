@@ -1997,6 +1997,12 @@ void QtAbstractPropertyBrowser::unsetFactoryForManager(QtAbstractPropertyManager
     }
 }
 
+QtAbstractEditorFactoryBase *QtAbstractPropertyBrowser::fetchFactory(const QtProperty *property)
+{
+    QtAbstractPropertyManager *manager = property->propertyManager();
+    return (*m_viewToManagerToFactory())[this][manager];
+}
+
 /*!
     Returns the current item in the property browser.
 

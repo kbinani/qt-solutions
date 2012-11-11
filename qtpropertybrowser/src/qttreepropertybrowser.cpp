@@ -95,6 +95,7 @@ public:
     void slotCurrentTreeItemChanged(QTreeWidgetItem *newItem, QTreeWidgetItem *);
 
     QTreeWidgetItem *editedItem() const;
+    void commitItem(const QModelIndex &modelIndex);
 
 private:
     void updateItem(QTreeWidgetItem *item);
@@ -238,7 +239,9 @@ public:
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
     void setModelData(QWidget *, QAbstractItemModel *,
-            const QModelIndex &) const {}
+            const QModelIndex &modelIndex) const {
+        m_editorPrivate->commitItem(modelIndex);
+    }
 
     void setEditorData(QWidget *, const QModelIndex &) const {}
 
@@ -710,6 +713,13 @@ void QtTreePropertyBrowserPrivate::editItem(QtBrowserItem *browserItem)
     }
 }
 
+void QtTreePropertyBrowserPrivate::commitItem(const QModelIndex &modelIndex)
+{
+    const QtProperty *property = indexToProperty(modelIndex);
+    QtAbstractEditorFactoryBase *factory = q_ptr->fetchFactory(property);
+    if (factory->isCommitEnabled()) emit q_ptr->valueChanged(property);
+}
+
 /*!
     \class QtTreePropertyBrowser
 
@@ -1059,6 +1069,9 @@ void QtTreePropertyBrowser::itemRemoved(QtBrowserItem *item)
 void QtTreePropertyBrowser::itemChanged(QtBrowserItem *item)
 {
     d_ptr->propertyChanged(item);
+    QtProperty *property = item->property();
+    QtAbstractEditorFactoryBase *factory = fetchFactory(property);
+    if (!factory->isCommitEnabled()) emit valueChanged(item->property());
 }
 
 /*!

@@ -42,6 +42,7 @@
 #define QTTREEPROPERTYBROWSER_H
 
 #include "qtpropertybrowser.h"
+#include <QtGui/QAbstractItemDelegate>
 
 #if QT_VERSION >= 0x040400
 QT_BEGIN_NAMESPACE
@@ -111,6 +112,7 @@ Q_SIGNALS:
 
     void collapsed(QtBrowserItem *item);
     void expanded(QtBrowserItem *item);
+    void valueChanged(const QtProperty *property);
 
 protected:
     virtual void itemInserted(QtBrowserItem *item, QtBrowserItem *afterItem);

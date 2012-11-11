@@ -151,6 +151,12 @@ class QT_QTPROPERTYBROWSER_EXPORT QtAbstractEditorFactoryBase : public QObject
     Q_OBJECT
 public:
     virtual QWidget *createEditor(QtProperty *property, QWidget *parent) = 0;
+
+    /**
+     * @brief Whether to emit valueChanged signal after setModelData called.
+     */
+    virtual bool isCommitEnabled(){ return false; }
+
 protected:
     explicit QtAbstractEditorFactoryBase(QObject *parent = 0)
         : QObject(parent) {}
@@ -292,6 +298,8 @@ public:
 
     QtBrowserItem *currentItem() const;
     void setCurrentItem(QtBrowserItem *);
+
+    QtAbstractEditorFactoryBase *fetchFactory(const QtProperty *property);
 
 Q_SIGNALS:
     void currentItemChanged(QtBrowserItem *);
