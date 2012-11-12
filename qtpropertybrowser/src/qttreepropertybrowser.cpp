@@ -717,7 +717,9 @@ void QtTreePropertyBrowserPrivate::commitItem(const QModelIndex &modelIndex)
 {
     const QtProperty *property = indexToProperty(modelIndex);
     QtAbstractEditorFactoryBase *factory = q_ptr->fetchFactory(property);
-    if (factory->isCommitEnabled()) emit q_ptr->valueChanged(property);
+    if (factory->emitValueChangedSignalAfterModelDataSet()) {
+        emit q_ptr->valueChanged(property);
+    }
 }
 
 /*!
@@ -1071,7 +1073,9 @@ void QtTreePropertyBrowser::itemChanged(QtBrowserItem *item)
     d_ptr->propertyChanged(item);
     QtProperty *property = item->property();
     QtAbstractEditorFactoryBase *factory = fetchFactory(property);
-    if (!factory->isCommitEnabled()) emit valueChanged(item->property());
+    if (!factory->emitValueChangedSignalAfterModelDataSet()) {
+        emit valueChanged(item->property());
+    }
 }
 
 /*!

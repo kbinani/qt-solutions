@@ -179,7 +179,7 @@ protected:
     QWidget *createEditor(QtStringPropertyManager *manager, QtProperty *property,
                 QWidget *parent);
     void disconnectPropertyManager(QtStringPropertyManager *manager);
-    bool isCommitEnabled(){ return true; }
+    bool commitAfterModelDataSet(){ return true; }
 private:
     QtLineEditFactoryPrivate *d_ptr;
     Q_DECLARE_PRIVATE(QtLineEditFactory)

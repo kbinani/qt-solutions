@@ -155,7 +155,7 @@ public:
     /**
      * @brief Whether to emit valueChanged signal after setModelData called.
      */
-    virtual bool isCommitEnabled(){ return false; }
+    virtual bool emitValueChangedSignalAfterModelDataSet(){ return false; }
 
 protected:
     explicit QtAbstractEditorFactoryBase(QObject *parent = 0)
