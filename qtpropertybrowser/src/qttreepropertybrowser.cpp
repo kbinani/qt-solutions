@@ -717,7 +717,7 @@ void QtTreePropertyBrowserPrivate::commitItem(const QModelIndex &modelIndex)
 {
     const QtProperty *property = indexToProperty(modelIndex);
     QtAbstractEditorFactoryBase *factory = q_ptr->fetchFactory(property);
-    if (property->isModified() && factory->emitValueChangedSignalAfterModelDataSet()) {
+    if (factory->emitValueChangedSignalAfterModelDataSet()) {
         emit q_ptr->valueChanged(property);
     }
 }
